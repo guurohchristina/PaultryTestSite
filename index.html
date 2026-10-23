@@ -128,7 +128,7 @@ input,select{background:#111111}
 <div id="note" class="msg hide"></div>
 
 <section id="v-record"><div class="cols entrycols">
-<div class="card"><h2>What happened?</h2><div class="types" id="types"></div>
+<div class="card"><h2>enter daily records</h2><div class="types" id="types"></div>
 <label>Date</label><input type="date" id="date">
 <div id="timeW" class="hide"><label>Time</label><input type="time" id="tm"></div>
 <div id="sexW" class="hide"><label>Male or female?</label><select id="sex"><option value="">Choose...</option><option value="male">Male</option><option value="female">Female</option></select></div>
@@ -138,7 +138,7 @@ input,select{background:#111111}
 <div id="illW" class="hide"><label>Type of sickness</label><input id="il" placeholder="e.g. Coccidiosis" autocomplete="off"></div>
 <div id="nextW" class="hide"><label>Next medication date (starts the countdown)</label><input type="date" id="nx"></div>
 <div id="amtW"><label id="amtL">Amount</label><input type="number" inputmode="decimal" id="amt" min="0" placeholder="0"></div>
-<label>Note (optional)</label><input type="text" id="nt" placeholder="e.g. coop B, buyer name">
+<label>Note (optional)</label><input type="text" id="nt" placeholder="e.g buyer name">
 <button class="save" id="save">Save record</button><div id="saved" class="ok"></div></div>
 <div class="card"><h2 id="mineH">Today's entries</h2><div id="mine"></div></div>
 </div></section>
@@ -215,12 +215,10 @@ function ic(id,c){return '<svg class="ic '+(c||"")+'" viewBox="0 0 64 64"><use h
 function setDateTxt(){$("dateTxt").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})}setDateTxt();
 var curDay="";function dayCheck(){var t=today();if(curDay&&t!==curDay){if($("date").value===curDay)$("date").value=t;setDateTxt();render()}curDay=t}
 
-/* ===== DATA LAYER: swap this object for fetch() calls to your Neon-backed API =====
-   list(): returns all records; add(rec); remove(id).  Record shape:
-   {type, qty, amount, note, cat, date:"YYYY-MM-DD", by, ts} */
+/* neon api */
 var KEY="poultry_records_v1";
-/* TEMPORARY local store (saves in this browser only) so the interface works on its own.
-   Replace this whole object with calls to your Neon-backed API: add(rec), remove(id), watch(cb). */
+
+ 
 var store={db:true,cb:null,
  load:function(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}},
  save:function(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}},
